@@ -94,6 +94,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
     "redux": "^3.5.2",
+    "redux-actions": "^0.10.0",
     "superagent": "^2.0.0"
   }
 }
