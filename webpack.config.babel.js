@@ -6,11 +6,6 @@ import addTestOptions from './tools/webpack.test';
 
 import path from 'path';
 
-import precss from 'precss';
-import stylelint from 'stylelint';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
-
 // set default env in case not specified (needed by tools like eslint to work without NODE_ENV)
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const isDev = process.env.NODE_ENV === 'development';
@@ -64,19 +59,10 @@ const config = {
 
   output: {
     path: dest,
-    publicPath: '/',
     filename: 'scripts/[name].js',
   },
 
   module: {
-    preLoaders: [
-      {
-        test: /\.(jsx?)$/,
-        include: src,
-        exclude: modules,
-        loader: 'eslint-loader',
-      },
-    ],
     loaders: [
       {
         test: /\.json$/,
@@ -215,22 +201,49 @@ const config = {
     hot: true,
     port: 3000,
     noInfo: false,
+    errors: false,
+    errorDetails: false,
+    warnings: false,
     stats: {
       chunks: false,
       color: true,
     },
   },
 
-  postcss() {
-    return [
-      precss,
-      stylelint,
-      autoprefixer({
+  postcss: [
+    // Allows you to nest one style rule inside another
+    // https://github.com/jonathantneal/postcss-nesting
+    require('postcss-nesting'),
+    require('precss'),
+    require('autoprefixer')({
         browsers: ['> 1%', 'last 15 versions'],
-      }),
-      cssnano,
-    ];
-  },
+    }),
+    // Transfer @import rule by inlining content, e.g. @import 'normalize.css'
+    // https://github.com/postcss/postcss-import
+    require('postcss-import'),
+    // W3C variables, e.g. :root { --color: red; } div { background: var(--color); }
+    // https://github.com/postcss/postcss-custom-properties
+    require('postcss-custom-properties'),
+    // W3C CSS Custom Media Queries, e.g. @custom-media --small-viewport (max-width: 30em);
+    // https://github.com/postcss/postcss-custom-media
+    require('postcss-custom-media'),
+    // CSS4 Media Queries, e.g. @media screen and (width >= 500px) and (width <= 1200px) { }
+    // https://github.com/postcss/postcss-media-minmax
+    require('postcss-media-minmax'),
+    // W3C CSS Custom Selectors, e.g. @custom-selector :--heading h1, h2, h3, h4, h5, h6;
+    // https://github.com/postcss/postcss-custom-selectors
+    require('postcss-custom-selectors'),
+    // W3C calc() function, e.g. div { height: calc(100px - 2em); }
+    // https://github.com/postcss/postcss-calc
+    require('postcss-calc'),
+    require('postcss-simple-vars'),
+    // W3C color() function, e.g. div { background: color(red alpha(90%)); }
+    // https://github.com/postcss/postcss-color-function
+    require('postcss-color-function'),
+    require('cssnano'),
+    // contains plugins that allow you to use future CSS features today
+    require('postcss-cssnext')
+  ]
 
 };
 

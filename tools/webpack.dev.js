@@ -7,7 +7,7 @@ const config = {
 
 const loaders = [
   {
-    test: /\.jsx?$/,
+    test: /\.js?$/,
     exclude: /(node_modules|bower_components)/,
     loader: 'react-hot!babel',
   },
