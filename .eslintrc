@@ -1,0 +1,26 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "mocha"
+  ],
+  "extends": "airbnb",
+  "globals": {
+    "__DEV__": true,
+    "__NODE_ENV__": true
+  },
+  "env": {
+    "browser": true,
+    "mocha": true
+  },
+  "rules": {
+    "no-confusing-arrow": 0,
+    "react/jsx-quotes": 0,
+    "jsx-quotes": [
+      2,
+      "prefer-double"
+    ]
+  },
+  "settings": {
+    "import/resolver": "webpack"
+  }
+}
