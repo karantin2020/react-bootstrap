@@ -60,6 +60,7 @@ const config = {
   output: {
     path: dest,
     filename: 'scripts/[name].js',
+    chunkFilename: '[id].chunk.js'
   },
 
   module: {
@@ -182,6 +183,10 @@ const config = {
     ),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ["app", "vendor"],
+      minChunks: Infinity
+    })
   ],
 
   // should be in main config as it is used by eslint to fix import/resolving

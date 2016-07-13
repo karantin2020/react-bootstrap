@@ -12,7 +12,7 @@ webpackConfig.externals = {
 export default (config) => {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai', 'sinon'],
+    frameworks: ['sinon'],
     files: [
       // instead of requiring files one by one (by glob) require a single file
       // which prepares the list of files and runs some basic setup, like
@@ -23,9 +23,8 @@ export default (config) => {
 
     preprocessors: {
       // add webpack as preprocessor
-      'tools/tests.webpack.prepare.js': ['webpack', 'sourcemap'],
-      'src/**/*.js': ['webpack', 'sourcemap'],
-      'src/**/*.jsx': ['webpack', 'sourcemap'],
+      'src/**/*.js': ['webpack'],
+      'src/**/*.jsx': ['webpack'],
     },
 
 // better to not specify plugins, as they required automatically by karma- names.
