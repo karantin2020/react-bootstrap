@@ -10,7 +10,11 @@ const name = generateActions(["name"], store.dispatch);
 
 class App extends Component {
   updateName = (e) => {
-    name.setIn(e.target.value || "Dude");
+    name.setIn(
+      new Promise(function(resolve, reject) {
+        resolve(e.target.value || "Huray");
+      })
+    );
   };
 
   render() {
